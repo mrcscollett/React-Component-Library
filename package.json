@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/mrcscollett"
   },
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "",
   "scripts": {
     "rollup": "rollup -c",
@@ -64,5 +64,8 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "dependencies": {
+    "jest-dom": "^4.0.0"
+  }
 }
