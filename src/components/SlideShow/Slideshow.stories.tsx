@@ -1,24 +1,23 @@
 import React from 'react';
-import { StoryObj, Meta } from '@storybook/react';
-import Slideshow from './Slideshow';
 
+import { action } from '@storybook/addon-actions';
+import Slideshow from './Slideshow';
+import { Meta } from '@storybook/react';
+
+
+const imageUrls = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHR2iFAm3R3DnGgPrLwOFLtFXuUZKbzcEHjl7uFPLJ&s', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfYUfjUhlXriSZAD6lGKNvX7umGPoysbdWZMDUL5jQ-Q&s']
 
 const meta: Meta<typeof Slideshow> = {
-    component: Slideshow,
-    title: "ReactComponentLibrary/Slideshow",
-    argTypes: {},
-  };
-  export default meta;
-  
-  type Story = StoryObj<typeof Slideshow>;
-
-const images = [ "image1.jpg","image2.jpg", "image3.jpg" ];
-const interval = 3000;
-
-export const Primary: Story = (args : any) => <Slideshow {...args} />;
-
-//export const Default = Template.bind({});
-Primary.args = {
-  images,
-  interval
+  component: Slideshow,
+  title: "ReactComponentLibrary/Slideshow",
+  argTypes: {},
 };
+export default meta;
+
+export const Default = () => (
+  <Slideshow
+    images={imageUrls}
+    onPrevious={action('Previous clicked')}
+    onNext={action('Next clicked')}
+  />
+);

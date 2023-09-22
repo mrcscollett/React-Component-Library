@@ -1,19 +1,40 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import '@testing-library/jest-dom'
+import { render, fireEvent } from '@testing-library/react';
 import Slideshow from './Slideshow';
+import '@testing-library/jest-dom'
 
-const images = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+const imageUrls = [
+  'https://via.placeholder.com/600x400?text=Slide+1',
+  'https://via.placeholder.com/600x400?text=Slide+2',
+  'https://via.placeholder.com/600x400?text=Slide+3',
+];
 
 describe('Slideshow component', () => {
-  test('renders correctly', () => {
-    const { container } = render(<Slideshow images={images} />);
-    expect(container).toBeInTheDocument();
+  it('renders with initial slide', () => {
+    const { getByAltText } = render(<Slideshow images={imageUrls} onPrevious={function (): void {
+      throw new Error('Function not implemented.');
+    } } onNext={function (): void {
+      throw new Error('Function not implemented.');
+    } } />);
+    const slide = getByAltText('Slide 1');
+    expect(slide).toBeInTheDocument();
   });
 
-  test('renders the correct number of images', () => {
-    const { container } = render(<Slideshow images={images} />);
-    const slideshowImages = container.querySelectorAll('img');
-    expect(slideshowImages.length).toBe(images.length);
+  it('navigates to the next slide', () => {
+    const { getByText, getByAltText } = render(<Slideshow images={imageUrls}/>);
+    const nextButton = getByText('Next');
+    fireEvent.click(nextButton);
+
+    const secondSlide = getByAltText('Slide 2');
+    expect(secondSlide).toBeInTheDocument();
+  });
+
+  it('navigates to the previous slide', () => {
+    const { getByText, getByAltText } = render(<Slideshow images={imageUrls} />);
+    const prevButton = getByText('Previous');
+    fireEvent.click(prevButton);
+
+    const lastSlide = getByAltText('Slide 3');
+    expect(lastSlide).toBeInTheDocument();
   });
 });
